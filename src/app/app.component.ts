@@ -17,6 +17,13 @@ export class AppComponent implements AfterViewInit {
   previousPoint?: { x: number, y: number };
 
   // LAB #11
+  readonly fileOptions = {
+    types: [{
+      description: 'PNG files',
+      accept: {'image/png': ['.png']}
+    }]
+  };
+
   // LAB #17
 
   constructor(private readonly paintService: PaintService) {
@@ -69,6 +76,11 @@ export class AppComponent implements AfterViewInit {
 
   async save() {
     // LAB #11
+    const blob = await this.paintService.toBlob(this.canvas!.nativeElement);
+    const handle = await window.showSaveFilePicker(this.fileOptions);
+    const writable = await handle.createWritable();
+    await writable.write(blob);
+    await writable.close();
   }
 
   async copy() {
