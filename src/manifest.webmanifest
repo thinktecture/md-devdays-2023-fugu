@@ -1,0 +1,17 @@
+{
+  "name": "Christians Paint",
+  "short_name": "Paint",
+  "theme_color": "#000080",
+  "background_color": "#808080",
+  "display": "standalone",
+  "scope": "./",
+  "start_url": "./",
+  "icons": [
+    {
+      "src": "assets/icons/icon.png",
+      "sizes": "480x480",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ]
+}
