@@ -14,6 +14,8 @@ export class AppComponent implements AfterViewInit {
   context?: CanvasRenderingContext2D;
 
   // LAB #5
+  previousPoint?: { x: number, y: number };
+
   // LAB #11
   // LAB #17
 
@@ -37,15 +39,23 @@ export class AppComponent implements AfterViewInit {
 
   onPointerDown(event: PointerEvent) {
     // LAB #5
+    this.previousPoint = { x: event.offsetX, y: event.offsetY };
   }
 
   onPointerMove(event: PointerEvent) {
     // LAB #4 and 5
-    this.context!.fillRect(event.offsetX, event.offsetY, 2, 2);
+    if (this.previousPoint) {
+      const currentPoint = { x: event.offsetX, y: event.offsetY };
+      for (const point of this.paintService.bresenhamLine(this.previousPoint, currentPoint)) {
+        this.context!.fillRect(point.x, point.y, 2, 2);
+      }
+      this.previousPoint = currentPoint;
+    }
   }
 
   onPointerUp() {
     // LAB #5
+    this.previousPoint = undefined;
   }
 
   onColorChange(color: HTMLInputElement) {
